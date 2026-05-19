@@ -1,0 +1,13 @@
+node_modules/
+out/
+.env
+render-latest.json
+render-props-*.json
+audio/voiceover-*.mp3
+audio/ambient.wav
+audio/phone-ring.wav
+audio/whoosh.wav
+audio/ding.wav
+*.mp4
+.DS_Store
+dist/

@@ -1,0 +1,37 @@
+{
+  "name": "actualyza-videos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "studio": "npx remotion studio src/index.ts",
+    "sfx": "node scripts/generate-sfx.js",
+    "audio:en": "LANG_TARGET=en node scripts/generate-audio.js",
+    "audio:es": "LANG_TARGET=es node scripts/generate-audio.js",
+    "render:en": "npx remotion render src/index.ts AmyReel-EN out/amy-en.mp4",
+    "render:es": "npx remotion render src/index.ts AmyReel-ES out/amy-es.mp4",
+    "build:en": "railway run npm run audio:en && npm run render:en",
+    "build:es": "railway run npm run audio:es && npm run render:es",
+    "build:all": "npm run sfx && npm run build:en && npm run build:es",
+    "go:en": "railway run node scripts/go.js en",
+    "go:es": "railway run node scripts/go.js es",
+    "daemon": "railway run node scripts/daemon.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@remotion/cli": "4.0.462",
+    "@remotion/google-fonts": "4.0.462",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "openai": "^6.38.0",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "remotion": "4.0.462",
+    "typescript": "6.0.3",
+    "wav": "^1.0.2",
+    "web-audio-api": "^1.5.1"
+  }
+}
