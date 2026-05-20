@@ -24,8 +24,9 @@ jobs:
         run: npx remotion browser ensure
 
       - name: Write video config
-        run: |
-          echo '${{ toJson(github.event.client_payload.config) }}' > render-latest.json
+        env:
+          CONFIG_JSON: ${{ toJson(github.event.client_payload.config) }}
+        run: node -e "require('fs').writeFileSync('render-latest.json', process.env.CONFIG_JSON)"
 
       - name: Generate voiceover EN
         if: github.event.client_payload.lang == 'en' || github.event.client_payload.lang == 'both'
