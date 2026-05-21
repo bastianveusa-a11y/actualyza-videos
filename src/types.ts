@@ -2,6 +2,8 @@ export type SubtitleChunk = { start: number; end: number; text: string };
 
 export type VideoConfig = {
   lang: "en" | "es";
+  colorTheme?: number;
+  seed?: number;
   hook: { line1: string; line2: string; subline?: string };
   problem: { intro: string; stats: Array<{ value: string; label: string }> };
   chat: {

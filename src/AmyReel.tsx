@@ -8,6 +8,7 @@ import { Scene5Cta } from "./scenes/Scene5Cta";
 import { ReHook } from "./components/ReHook";
 import { Subtitles } from "./components/Subtitles";
 import { VideoConfig, DEFAULT_CONFIG } from "./types";
+import { ThemeContext, getTheme } from "./theme";
 
 // Timing (frames @ 30fps):
 // S1 Hook:    0   – 75   (2.5s)
@@ -20,15 +21,28 @@ import { VideoConfig, DEFAULT_CONFIG } from "./types";
 
 export const AmyReel: React.FC<Partial<VideoConfig>> = (props) => {
   const config: VideoConfig = { ...DEFAULT_CONFIG, ...props };
+  const theme = getTheme(config.colorTheme);
   const frame = useCurrentFrame();
   const bgOpacity = interpolate(frame, [0, 30], [0, 1], { extrapolateRight: "clamp" });
 
+  // Gradient position varies by theme
+  const blobPositions = [
+    { top: -200, left: -200, bottom: undefined, right: undefined },
+    { top: undefined, left: -200, bottom: -200, right: undefined },
+    { top: -200, left: undefined, bottom: undefined, right: -200 },
+    { top: undefined, left: undefined, bottom: -200, right: -200 },
+    { top: -300, left: "50%", bottom: undefined, right: undefined },
+  ];
+  const pos1 = blobPositions[(config.colorTheme ?? 0) % blobPositions.length];
+  const pos2 = blobPositions[((config.colorTheme ?? 0) + 2) % blobPositions.length];
+
   return (
-    <AbsoluteFill style={{ background: "#08111F", fontFamily: "'Inter', sans-serif" }}>
+    <ThemeContext.Provider value={theme}>
+    <AbsoluteFill style={{ background: theme.bg, fontFamily: "'Inter', sans-serif" }}>
       {/* Background blobs */}
       <AbsoluteFill style={{ opacity: bgOpacity }}>
-        <div style={{ position: "absolute", top: -200, left: -200, width: 900, height: 900, borderRadius: "50%", background: "radial-gradient(circle, rgba(76,142,255,0.10) 0%, transparent 70%)" }} />
-        <div style={{ position: "absolute", bottom: -200, right: -200, width: 900, height: 900, borderRadius: "50%", background: "radial-gradient(circle, rgba(123,63,232,0.08) 0%, transparent 70%)" }} />
+        <div style={{ position: "absolute", ...pos1, width: 900, height: 900, borderRadius: "50%", background: `radial-gradient(circle, ${theme.blob1rgba} 0%, transparent 70%)` }} />
+        <div style={{ position: "absolute", ...pos2, width: 900, height: 900, borderRadius: "50%", background: `radial-gradient(circle, ${theme.blob2rgba} 0%, transparent 70%)` }} />
       </AbsoluteFill>
 
       {/* Scenes */}
@@ -60,5 +74,6 @@ export const AmyReel: React.FC<Partial<VideoConfig>> = (props) => {
       <Sequence from={490} durationInFrames={36}><Audio src={staticFile("audio/success.wav")} volume={0.4} /></Sequence>
       <Sequence from={683} durationInFrames={18}><Audio src={staticFile("audio/whoosh.wav")} volume={0.38} /></Sequence>
     </AbsoluteFill>
+    </ThemeContext.Provider>
   );
 };
