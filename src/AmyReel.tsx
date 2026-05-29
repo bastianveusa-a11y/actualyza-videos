@@ -47,7 +47,7 @@ export const AmyReel: React.FC<Partial<VideoConfig>> = (props) => {
 
       {/* Scenes */}
       <Sequence from={0}   durationInFrames={75}><Scene1Hook  hook={config.hook} /></Sequence>
-      <Sequence from={75}  durationInFrames={45}><ReHook stat="62%" label={config.lang === "es" ? "nunca vuelven a llamar" : "never call back"} /></Sequence>
+      <Sequence from={75}  durationInFrames={45}><ReHook stat={config.rehook?.stat ?? "62%"} label={config.rehook?.label ?? (config.lang === "es" ? "nunca vuelven a llamar" : "never call back")} /></Sequence>
       <Sequence from={120} durationInFrames={150}><Scene2Problem problem={config.problem} /></Sequence>
       <Sequence from={270} durationInFrames={210}><Scene3Amy   chat={config.chat} /></Sequence>
       <Sequence from={480} durationInFrames={210}><Scene4Result result={config.result} /></Sequence>

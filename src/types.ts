@@ -5,6 +5,7 @@ export type VideoConfig = {
   colorTheme?: number;
   seed?: number;
   hook: { line1: string; line2: string; subline?: string };
+  rehook?: { stat: string; label: string };
   problem: { intro: string; stats: Array<{ value: string; label: string }> };
   chat: {
     label: string;
@@ -25,6 +26,108 @@ export type VideoConfig = {
     bestTime: string;
     hookText: string;
   };
+};
+
+// ── StoryReel types ──────────────────────────────────────────
+
+export type StoryBeat = {
+  text: string;
+  emoji?: string;
+  sfx?: "ring" | "crash" | "notification" | "whoosh" | "tap";
+  style?: "normal" | "impact" | "whisper";
+  durationFrames?: number;
+};
+
+export type StoryConfig = {
+  lang: "en" | "es";
+  colorTheme?: number;
+  seed?: number;
+  opener: string;
+  beats: StoryBeat[];
+  twist: string;
+  punchline: string;
+  amyLine: string;
+  benefits: string[];
+  cta: { button: string; url: string };
+  voice: { script: string };
+  social: { description: string; hashtags: string[] };
+};
+
+export const DEFAULT_STORY_EN: StoryConfig = {
+  lang: "en",
+  colorTheme: 2,
+  opener: "",
+  beats: [
+    { text: "He walked in. She already knew.", emoji: "📱", durationFrames: 240 },
+    { text: "Three teeth.", emoji: "🦷💥", style: "impact", durationFrames: 150 },
+    { text: "He called his lawyer.", emoji: "📞", durationFrames: 180 },
+    { text: "It rang... and rang...", emoji: "😤", style: "whisper", durationFrames: 90 },
+    { text: "He called his dentist.", emoji: "📞", durationFrames: 120 },
+    { text: "Same thing.", emoji: "😭", style: "whisper", durationFrames: 60 },
+  ],
+  twist: "Why is no one picking up?",
+  punchline: "But it wasn't her.",
+  amyLine: "NOBODY had AMY.",
+  benefits: [
+    "Answers every call in under 30s",
+    "100+ simultaneous calls, any language",
+    "Books live — everything logged",
+  ],
+  cta: { button: "💬 Comment AMY → Free Trial", url: "actualyza.com" },
+  voice: {
+    script: "He walked in with his phone in his hand. His wife looked at him. He saw it in her eyes. She already knew. Without a word, she grabbed it... and knocked out three of his teeth. Desperate, he called his lawyer. It rang. And rang. No one answered. Then he called his dentist. Urgently. Same thing. Standing there, mouth broken, silence on the other end... he asked himself... why is no one picking up? He thought his wife had something to do with it. But no. What he didn't know was that neither his lawyer nor his dentist had AMY. An AI that answers every call in under 30 seconds, handles over 100 simultaneous calls in any language, books appointments live, and logs everything automatically. If you want your free trial, comment AMY. Or go to actualyza dot com.",
+  },
+  social: {
+    description: "He walked in. She already knew. 📱\nWithout a word — she knocked out three of his teeth. 🦷💥\n\nHe called his lawyer. It rang and rang. No answer.\nHe called his dentist. Same thing.\n\nStanding there, mouth broken, he asked:\nWhy is no one picking up?\n\nNeither had AMY. 😳\n\nAMY answers every call in <30s, handles 100+ calls simultaneously, books live.\n💬 Comment AMY and get your free trial → actualyza.com",
+    hashtags: ["#TrueStory", "#DentalHumor", "#AIReceptionist", "#AMY", "#Actualyza", "#MissedCalls", "#DentistLife", "#LawyerLife"],
+  },
+};
+
+export const DEFAULT_STORY_ES: StoryConfig = {
+  lang: "es",
+  colorTheme: 2,
+  opener: "",
+  beats: [
+    { text: "Llegó a casa. Ella ya lo sabía.", emoji: "📱", durationFrames: 240 },
+    { text: "Tres dientes.", emoji: "🦷💥", style: "impact", durationFrames: 150 },
+    { text: "Llamó a su abogado.", emoji: "📞", durationFrames: 180 },
+    { text: "Sonaba... sonaba...", emoji: "😤", style: "whisper", durationFrames: 90 },
+    { text: "Llamó a su dentista.", emoji: "📞", durationFrames: 120 },
+    { text: "Tampoco.", emoji: "😭", style: "whisper", durationFrames: 60 },
+  ],
+  twist: "¿Por qué nadie me contesta?",
+  punchline: "Pero no era ella.",
+  amyLine: "NADIE tenía AMY.",
+  benefits: [
+    "Contesta cada llamada en menos de 30s",
+    "+100 llamadas simultáneas, cualquier idioma",
+    "Agenda en vivo — todo registrado",
+  ],
+  cta: { button: "💬 Comenta AMY → Prueba Gratis", url: "actualyza.com" },
+  voice: {
+    script: `Llegó a la casa con el teléfono en la mano.
+Su esposa lo miró. Él lo vio en sus ojos.
+Ya sabía.
+Sin decir nada, ella se lo quitó de las manos — y de un golpe le voló tres dientes.
+Él, desesperado, marcó a su abogado.
+El teléfono sonaba. Sonaba. Nadie contestó.
+Entonces llamó a su dentista. Con urgencia.
+Tampoco.
+Parado ahí, con la boca rota y el silencio del otro lado,
+se preguntó: ¿por qué nadie me contesta?
+Pensó que su esposa tenía algo que ver.
+Pero no.
+Lo que él no sabía era que ni su abogado ni su dentista tenían AMY —
+una infraestructura de inteligencia artificial que contesta cada llamada en menos de 30 segundos,
+gestiona más de 100 llamadas simultáneas en distintos idiomas,
+agenda en vivo, y deja todo registrado.
+Si quieres tu prueba gratis, comenta AMY —
+o entra a actualyza.com`,
+  },
+  social: {
+    description: "Llegó a casa. Ella ya lo sabía. 📱\nSin decir nada — le voló tres dientes. 🦷💥\n\nLlamó a su abogado. Sonaba y sonaba. Nadie.\nLlamó a su dentista. Tampoco.\n\nParado ahí, con la boca rota, se preguntó:\n¿Por qué nadie me contesta?\n\nNinguno tenía AMY. 😳\n\nAMY contesta cada llamada en <30s, gestiona +100 llamadas simultáneas, agenda en vivo.\n💬 Comenta AMY y te damos tu prueba gratis → actualyza.com",
+    hashtags: ["#HistoriaReal", "#HumorDental", "#RecepcionistaIA", "#AMY", "#Actualyza", "#LlamadasPerdidas", "#Dentista", "#Abogado"],
+  },
 };
 
 // S1:0-75  ReHook:75-120  S2:120-270  S3:270-480  S4:480-690  S5:690-900
